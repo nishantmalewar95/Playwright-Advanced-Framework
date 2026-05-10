@@ -1,4 +1,0 @@
-com\banking\tests\EndToEndBankingTest.class
-com\banking\tests\LoanApplicationTest.class
-com\banking\tests\LoginTest.class
-com\banking\runners\TestNGRunner.class

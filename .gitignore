@@ -1,0 +1,13 @@
+target/
+test-output/
+allure-results/
+playwright-report/
+test-results/
+.settings/
+.classpath/
+.project/
+.idea/
+*.class
+*.log
+tmp.py
+.DS_Store
