@@ -25,13 +25,19 @@ jobs:
       - name: Install Maven dependencies
         run: mvn -B dependency:resolve
 
-      # NPX method use kar rahe hain kyunki Maven plugin artifact issue de raha tha
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Playwright NPM package
+        run: npm install playwright@1.40.0 --no-save
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Run tests
-        # ensure kar rahe hain ki failure par bhi pipeline agle step par jaye (reports ke liye)
-        continue-on-error: true
         run: mvn -B test
 
       # Test results (Allure) ko save karne ke liye
