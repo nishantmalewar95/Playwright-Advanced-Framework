@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Banking Automation Suite" parallel="tests" thread-count="2" verbose="2">
+
+    <test name="E2E Loan Workflows">
+        <classes>
+            <class name="com.banking.tests.LoginTest"/>
+            
+            <class name="com.banking.tests.EndToEndBankingTest"/>
+        </classes>
+    </test>
+
+</suite>

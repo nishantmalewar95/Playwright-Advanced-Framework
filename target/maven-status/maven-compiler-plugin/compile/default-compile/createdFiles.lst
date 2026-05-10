@@ -1,0 +1,5 @@
+com\banking\utils\AIService.class
+com\banking\pages\LoanRequestPage.class
+com\banking\base\BaseTest.class
+com\banking\pages\LoginPage.class
+com\banking\utils\ConfigReader.class
