@@ -2,6 +2,7 @@ package com.banking.pages;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
+import io.qameta.allure.Step;
 
 public class LoanRequestPage {
     private final Page page;
@@ -21,6 +22,7 @@ public class LoanRequestPage {
         return page;
     }
 
+    @Step("Navigate to loan request page")
     public void goToRequestLoan() {
         page.navigate("https://parabank.parasoft.com/parabank/requestloan.htm");
         page.waitForLoadState(LoadState.DOMCONTENTLOADED);
@@ -29,11 +31,13 @@ public class LoanRequestPage {
         page.waitForTimeout(1000);
     }
 
+    @Step("Apply for loan with amount: {amount} and down payment: {downPayment}")
     public void applyForLoan(String amount, String downPayment) {
         String firstAccountId = page.locator(fromAccountIdSelect + " option").first().getAttribute("value");
         applyForLoan(amount, downPayment, firstAccountId);
     }
 
+    @Step("Apply for loan with amount: {amount}, down payment: {downPayment}, and account: {accountId}")
     public void applyForLoan(String amount, String downPayment, String accountId) {
         page.waitForSelector(loanAmountInput);
         page.waitForSelector(downPaymentInput);
@@ -51,6 +55,7 @@ public class LoanRequestPage {
         page.waitForTimeout(1000);
     }
 
+    @Step("Get loan application result")
     public String getLoanResult() {
         page.waitForTimeout(2000);
 

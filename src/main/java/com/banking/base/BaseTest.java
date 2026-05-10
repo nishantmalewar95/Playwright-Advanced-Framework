@@ -3,6 +3,7 @@ package com.banking.base;
 import com.microsoft.playwright.*;
 import org.testng.annotations.*;
 import java.nio.file.Paths;
+import com.banking.utils.DBUtils; // Naya import for Database cleanup
 
 public class BaseTest {
     protected Playwright playwright;
@@ -37,7 +38,7 @@ public class BaseTest {
     public void tearDown(org.testng.ITestResult result) {
         // Agar test fail hota hai, toh AI Service call hogi aur Trace file save hogi
         if (!result.isSuccess()) {
-            // Failure ke waqt AI Service call hogi
+            // Failure ke waqt AI Service call hogi (Keeping your existing logic)
             com.banking.utils.AIService.analyzeFailure(result.getName(), result.getThrowable().getMessage());
             
             String tracePath = "target/traces/" + result.getName() + ".zip";
@@ -53,7 +54,17 @@ public class BaseTest {
 
     @AfterClass
     public void closeBrowser() {
-        browser.close();
-        playwright.close();
+        if (browser != null) browser.close();
+        if (playwright != null) playwright.close();
+    }
+
+    /**
+     * NEW LOGIC: Suite level par DB connection close karna.
+     * Isse aapka existing browser logic disturb nahi hoga.
+     */
+    @AfterSuite(alwaysRun = true)
+    public void tearDownDB() {
+        DBUtils.closeConnection();
+        System.out.println("Global Cleanup: Database connection closed successfully.");
     }
 }
