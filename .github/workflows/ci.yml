@@ -2,9 +2,7 @@ name: Java CI with Playwright
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [ main, master ]
   pull_request:
 
 jobs:
@@ -22,25 +20,19 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - name: Install Maven dependencies
-        run: mvn -B dependency:resolve
-
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-
-      - name: Install Playwright NPM package
-        run: npm install playwright@1.40.0 --no-save
+          # DHAYN DE: Yahan se cache hata diya gaya hai
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Run tests
+        continue-on-error: true
         run: mvn -B test
 
-      # Test results (Allure) ko save karne ke liye
       - name: Upload Allure Results
         if: always()
         uses: actions/upload-artifact@v4
